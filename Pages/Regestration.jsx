@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 
 
@@ -106,6 +107,7 @@ const onFinishFailed = errorInfo => {
     </Form.Item>
   </Form>
 <Toaster />
+<p>Already Have an Account <Link to={`/login`}> Login</Link></p>
     </div>
   
   )

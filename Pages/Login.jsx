@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // 
 
   
@@ -106,6 +106,7 @@ const onFinishFailed = errorInfo => {
     </Form.Item>
   </Form>
 <Toaster />
+<p >Dont you have an account ? <Link to={`/`} >SignUP</Link> </p>
     </div>
   
   )
