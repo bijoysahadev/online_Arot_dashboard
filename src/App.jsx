@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -10,13 +10,31 @@ const App = () => {
 const onFinish  =  async values  => {
   console.log(values);
 
- let data= await axios.post("http://localhost:3000/api/v1/authentication/regestration",
+ let data = await axios.post("http://localhost:3000/api/v1/authentication/regestration",
   {
   userName: values.username,
   password : values.password,
-  Email : values.Email,
+  email : values.Email,
+}
+,{
+  headers:{
+    Authorization: "12345678"
+  }
 }
 )
+
+//
+if 
+
+ (data.data.success=="data sent Succssfully"){
+  toast.success("Regestration Done!")
+}
+ else if (data.data=="Data exits Already"){
+  toast.error("Account already exits")
+}
+else if (data.data=="Please Enter a Valid Email"){
+  toast.error("Please Enter A Valid Email")
+}
 
 console.log(data);
 
@@ -39,7 +57,7 @@ const onFinishFailed = errorInfo => {
 
 
   return (
-    <div className='bg-red-500' >
+    <div  >
 
  <Form
     name="basic"
@@ -84,10 +102,9 @@ const onFinishFailed = errorInfo => {
       </Button>
     </Form.Item>
   </Form>
-
+<Toaster />
     </div>
-    // sfvdasfasfsf
-    // basdasd
+  
   )
 }
 
