@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const Regestration = () => {
-
+let navigate=useNavigate()
 const onFinish  =  async values  => {
   console.log(values);
 
@@ -29,6 +29,7 @@ if
 
  (data.data.success=="data sent Succssfully"){
   toast.success("Regestration Done!")
+navigate(`/otp/${data.data.email}`)
 }
  else if (data.data=="Data exits Already"){
   toast.error("Account already exits")

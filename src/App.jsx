@@ -15,7 +15,7 @@ import {
 import Regestration from "../Pages/Regestration";
 import Login from "../Pages/Login";
 import Home from "../Pages/Home";
-
+import OtpVerfication from '../Pages/OtpVerfication'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -37,6 +37,14 @@ const router = createBrowserRouter(
       <Route
         path="/home"
         element={<Home />}
+
+
+      >
+
+      </Route>
+      <Route
+        path="/otp/:email"
+        element={<OtpVerfication/>}
 
 
       >
