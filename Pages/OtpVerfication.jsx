@@ -1,9 +1,12 @@
 import React from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 const OtpVerfication = () => {
+  const params=useParams()
+  console.log(params.email);
+  
 
   let navigate=useNavigate()
 
@@ -11,27 +14,33 @@ const OtpVerfication = () => {
   const onFinish  =  async values  => {
   console.log(values);
 
- let data = await axios.post("http://localhost:3000/api/v1/authentication/login",
+ let data = await axios.post("http://localhost:3000/api/v1/authentication/Otp",
   {
  
-  password : values.password,
-  email : values.Email,
+  
+  email : params.email,
+  otp : values.OTP,
 }
 ,
 )
+console.log(data.data);
 
 //
 if 
 
- (data.data.success=="Login Succesfull"){
-  toast.success("Login Successfully !")
-  //  navigate("/home")
+ (data.data.success=="OTP match"){
+  toast.success("Verfication Successfully !")
+   navigate("/login")
 
 }
  
- else if (data.data.error=="Invalid Credentials"){
+ else if (data.data.error=="OTP not match"){
+  toast.error("Please Enter Correct OTP")
+}
+ else if (data.data.error=="Invalid Cradentials"){
   toast.error("Invalid Credentials")
 }
+
 
 
 console.log(data);
@@ -83,6 +92,7 @@ const onFinishFailed = errorInfo => {
       </Button>
     </Form.Item>
   </Form>
+  <Toaster/>
     </div>
   )
 }

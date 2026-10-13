@@ -40,9 +40,11 @@ if
  else if (data.data.error=="Invalid Credentials"){
   toast.error("Invalid Credentials")
 }
+ else if (data.data.error=='Please Verify Your Email First'){
+  toast.error("Please Verift Your Email First")
+}
 
-
-console.log(data);
+console.log(data.data);
 
 
   console.log( values.username);
