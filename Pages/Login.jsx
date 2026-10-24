@@ -109,6 +109,7 @@ const onFinishFailed = errorInfo => {
   </Form>
 <Toaster />
 <p >Dont you have an account ? <Link to={`/`} >SignUP</Link> </p>
+<p ><Link to={`/forgetpassword`} >Forget Password</Link> </p>
     </div>
   
   )

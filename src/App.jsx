@@ -16,6 +16,8 @@ import Regestration from "../Pages/Regestration";
 import Login from "../Pages/Login";
 import Home from "../Pages/Home";
 import OtpVerfication from '../Pages/OtpVerfication'
+import ForgetPassword from "../Pages/ForgetPassword";
+import ChangePassword from "../Pages/ChangePassword";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -45,6 +47,22 @@ const router = createBrowserRouter(
       <Route
         path="/otp/:email/:otp"
         element={<OtpVerfication />}
+
+
+      >
+
+      </Route>
+      <Route
+        path="/forgetpassword"
+        element={<ForgetPassword/>}
+
+
+      >
+
+      </Route>
+      <Route
+        path="/changepassword/:email"
+        element={<ChangePassword/>}
 
 
       >
