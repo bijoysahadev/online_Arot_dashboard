@@ -29,7 +29,7 @@ if
 
  (data.data.success=="data sent Succssfully"){
   toast.success("Regestration Done!")
-navigate(`/otp/${data.data.email}`)
+navigate(`/login`)
 }
  else if (data.data=="Data exits Already"){
   toast.error("Account already exits")

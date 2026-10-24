@@ -43,8 +43,8 @@ const router = createBrowserRouter(
 
       </Route>
       <Route
-        path="/otp/:email"
-        element={<OtpVerfication/>}
+        path="/otp/:email/:otp"
+        element={<OtpVerfication />}
 
 
       >
