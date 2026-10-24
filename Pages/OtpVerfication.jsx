@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 const OtpVerfication = () => {
+
+  let [message,setMessage]=useState("Verification loading.....")
   const params=useParams()
-  console.log(params.email);
-console.log(params.otp);
+
 
 
   
@@ -20,9 +21,17 @@ async function mydata (){
   email:params.email,
   otp:params.otp
 })
-if(data.data.success=="Otp match") {
-  navigate("/login")
+if(data.data.success=="OTP match") {
+ 
+  // navigate("/login")
+   setMessage("Verfication Successfull")
+
 }
+
+else if(data.data.error=="Time expired") {
+   
+    setMessage("Time Expired")
+  }
 }
 mydata()
 },[])
@@ -34,7 +43,7 @@ mydata()
   return (
     <div>
       
-<div><h1>Verfication loading.....</h1></div>
+<div><h1>{message}</h1></div>
   <Toaster/>
     </div>
   )
