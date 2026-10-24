@@ -19,7 +19,7 @@ async function mydata (){
   let data = await axios.post('http://localhost:3000/api/v1/authentication/Otp',{
 
   email:params.email,
-  otp:params.otp
+  otp:params.otp,
 })
 if(data.data.success=="OTP match") {
  
