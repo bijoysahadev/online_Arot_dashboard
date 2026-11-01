@@ -36,7 +36,7 @@ const Login = () => {
 
       (data.data.success == "Login Succesfull") {
       toast.success("Login Successfully !")
-      navigate("/home")
+      navigate("/dashboard")
       dispatch(activeUserInfo(JSON.stringify(data.data)))
     }
 
