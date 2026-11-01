@@ -2,7 +2,9 @@ import React from 'react'
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../Slices/UserInfoSlice';
+import { UserInfoSlice } from '../Slices/UserInfoSlice';
 
 
 const items = [
@@ -82,9 +84,16 @@ const SideBar = () => {
     // console.log( e.key);
     navigate(e.key)
   };
-  return (
-    <>
+  let data=useSelector(state=>state.userInfo.value)
+  let dispatch=useDispatch()
+  let handleLogout=()=>{
+    dispatch(logout(JSON.stringify(data.data)))
+    navigate("/login")
     
+  }
+  return (
+    <div className='flex flex-col justify-between h-screen' >
+
       <Menu
       onClick={onClick}
       style={{ width: 256 }}
@@ -93,7 +102,17 @@ const SideBar = () => {
       mode="inline"
       items={items}
     />
-    </>
+    <div className='mx-4 w-[50%]' >
+      <div className='flex items-center gap-x-3' >
+      <div className='bg-amber-400  border border-red-200 w-8 h-8 rounded-full' ></div>
+   <div >
+       <h2 className='text-sm font-medium' >Bijoy Saha Tonmoy</h2>
+      <p >Users</p>
+   </div>
+    </div>
+    <h4 onClick={handleLogout} className=' px-10 py-3 text-xl font-bold cursor-pointer ' >Logout</h4>
+    </div>
+    </div>
   )
 }
 
