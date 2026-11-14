@@ -14,33 +14,7 @@ const items = [
  icon: <AppstoreOutlined />,
   
   },
-  {
-    key: 'sub2',
-    label: 'Products',
-    icon: <MailOutlined />,
-    children: [
-      { key: 'createproduct', label: 'Create Products' },
-      { key: 'viewproduct', label: 'View Products' },
-   
-    ],
-  },
-  {
-    type: 'divider',
-  },
-  {
-    key: 'sub4',
-    label: 'Varaints',
-    icon: <SettingOutlined />,
-    children: [
-      { key: 'createVarient', label: 'Create Varient' },
-      { key: 'viewVarient', label: 'View Varient' },
-  
-    ],
-  },
-   {
-    type: 'divider',
-  },
-  {
+    {
     key: 'sub5',
     label: 'Categerory',
     icon: <SettingOutlined />,
@@ -63,6 +37,34 @@ const items = [
   
     ],
   },
+  {
+    key: 'sub2',
+    label: 'Products',
+    icon: <MailOutlined />,
+    children: [
+      { key: 'createproduct', label: 'Create Products' },
+      { key: 'viewproduct', label: 'View Products' },
+   
+    ],
+  },
+  {
+    type: 'divider',
+  },
+  // 
+  {
+    key: 'sub4',
+    label: 'Varaints',
+    icon: <SettingOutlined />,
+    children: [
+      { key: 'createVarient', label: 'Create Varient' },
+      { key: 'viewVarient', label: 'View Varient' },
+  
+    ],
+  },
+   {
+    type: 'divider',
+  },
+
     {
     type: 'divider',
   },
@@ -85,6 +87,8 @@ const SideBar = () => {
     navigate(e.key)
   };
   let data=useSelector(state=>state.userInfo.value)
+  console.log(data?.userName);
+  
   let dispatch=useDispatch()
   let handleLogout=()=>{
     dispatch(logout(JSON.stringify(data.data)))
@@ -106,7 +110,7 @@ const SideBar = () => {
       <div className='flex items-center gap-x-3' >
       <div className='bg-amber-400  border border-red-200 w-8 h-8 rounded-full' ></div>
    <div >
-       <h2 className='text-sm font-medium' >Bijoy Saha Tonmoy</h2>
+       <h2 className='text-sm font-medium' >{data?.userName || "Guest User"}</h2>
       <p >Users</p>
    </div>
     </div>
