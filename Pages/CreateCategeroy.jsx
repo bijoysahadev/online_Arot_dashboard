@@ -3,15 +3,20 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const CreateCategeroy = () => {
   
+const userInfo = useSelector((state) => state.userInfo.value);
+console.log("userInfo:", userInfo, typeof userInfo);
+
   const onFinish = async values =>  {
     // console.log(values);
     
   // console.log(values.Categoryname);
    let data = await axios.post("http://localhost:3000/api/v1/product/createcategory",{
-    categoryname: values.Categoryname
+    categoryname: values.Categoryname,
+    categoryownerid: userInfo.id
    })
   console.log(data);
   

@@ -47,7 +47,7 @@ const Login = () => {
       toast.error("Please Verift Your Email First")
     }
 
-    console.log(data.data);
+    // console.log(data.data);
 
 
     // console.log( values.username);

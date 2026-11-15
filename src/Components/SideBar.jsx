@@ -87,7 +87,7 @@ const SideBar = () => {
     navigate(e.key)
   };
   let data=useSelector(state=>state.userInfo.value)
-  console.log(data?.userName);
+  // console.log(data?.userName);
   
   let dispatch=useDispatch()
   let handleLogout=()=>{

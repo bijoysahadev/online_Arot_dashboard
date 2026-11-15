@@ -8,7 +8,8 @@ export const UserInfoSlice = createSlice({
  
   reducers: {
     activeUserInfo: (state,action) => {
-        state.value=action.payload
+        const payload = action.payload;
+  state.value = typeof payload === "string" ? JSON.parse(payload) : payload;
     
 //    console.log(state.value);
 //    console.log(action.payload);
