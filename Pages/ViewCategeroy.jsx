@@ -1,22 +1,69 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Flex, Space, Table, Tag } from 'antd';
+import { Input, Modal, Popconfirm, Space, Table } from 'antd';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ViewCategeroy =  () => {
-  let [data,setData]=useState()
+  const [data, setData] = useState([])
+  const [deletingCategoryId, setDeletingCategoryId] = useState(null)
+  const [editingCategory, setEditingCategory] = useState(null)
+  const [editedCategoryName, setEditedCategoryName] = useState('')
+  const [updatingCategory, setUpdatingCategory] = useState(false)
+
+  const handleEdit = (category) => {
+    setEditingCategory(category)
+    setEditedCategoryName(category.name)
+  }
+
+  const handleDelete = async (categoryId) => {
+    setDeletingCategoryId(categoryId)
+    try {
+      await axios.delete(`http://localhost:3000/api/v1/product/deletecategory/${categoryId}`)
+      setData(currentData => currentData.filter(item => item.key !== categoryId))
+      toast.success('Category Deleted!')
+    } catch (error) {
+      toast.error(error.response?.data?.error || error.message || 'Failed to delete category')
+    } finally {
+      setDeletingCategoryId(null)
+    }
+  }
+
+  const handleUpdate = async () => {
+    const categoryName = editedCategoryName.trim()
+    if (!categoryName || !editingCategory) {
+      return
+    }
+
+    setUpdatingCategory(true)
+    try {
+      await axios.put(`http://localhost:3000/api/v1/product/updatecategory/${editingCategory.key}`, {
+        categoryname: categoryName,
+      })
+      setData(currentData => currentData.map(item => (
+        item.key === editingCategory.key ? { ...item, name: categoryName } : item
+      )))
+      setEditingCategory(null)
+      toast.success('Category Updated!')
+    } catch (error) {
+      toast.error(error.response?.data?.error || error.message || 'Failed to update category')
+    } finally {
+      setUpdatingCategory(false)
+    }
+  }
+
 const columns = [
  
     {
     title: 'serial',
     dataIndex: 'serial',
   
-    render:(item,arr,index) => <a>{index+1}</a>,
+    render:(_item,_record,index) => <a>{index+1}</a>,
   },
     {
     title: 'Owner',
-    dataIndex: 'key',
+    dataIndex: 'ownername',
    
-    render:(item,arr,index) => <a>{item}</a>,
+    render:(item) => <a>{item}</a>,
   },
 
   
@@ -34,8 +81,17 @@ const columns = [
  
     render: (_, record) => (
       <Space size="medium">
-        <a>Edit </a>
-        <a>Delete</a>
+        <a onClick={() => handleEdit(record)}>Edit</a>
+        <Popconfirm
+          title="Delete this category?"
+          description="This action cannot be undone."
+          onConfirm={() => handleDelete(record.key)}
+          okText="Delete"
+          cancelText="Cancel"
+          okButtonProps={{ loading: deletingCategoryId === record.key }}
+        >
+          <a>Delete</a>
+        </Popconfirm>
       </Space>
     ),
   },
@@ -44,26 +100,20 @@ const columns = [
 
 
 
+
   useEffect(  ()=>{
  async function allcategory(){
-   let data = await axios.get("http://localhost:3000/api/v1/product/viewcateogory")
-    console.log(data.data);
-let arr=[]
-    data.data.map(item=>{
-      arr.push({
-         
-    key: item.categoryownerid.userName,
-    name: item.categoryname,
-   
-
-  
-  
-      })
-    
-      // console.log(item.categoryname);
-      
-    })
-      setData(arr)
+   try {
+     let response = await axios.get("http://localhost:3000/api/v1/product/viewcateogory")
+     let arr = response.data.map(item => ({
+       ownername: item.categoryownerid.userName,
+       key: item._id,
+       name: item.categoryname,
+     }))
+     setData(arr)
+   } catch (error) {
+     toast.error(error.response?.data?.error || error.message || 'Failed to load categories')
+   }
  }
 
  allcategory()
@@ -73,7 +123,25 @@ let arr=[]
   return (
     <div className='mr-10 mt-4' >
       <h1 className=' mb-4 text-center font-bold text-4xl text-black ' >All Categories</h1>
-      <Table columns={columns} dataSource={data} /></div>
+      <Table columns={columns} dataSource={data} />
+      <Modal
+        title="Edit Category"
+        open={Boolean(editingCategory)}
+        onOk={handleUpdate}
+        onCancel={() => setEditingCategory(null)}
+        okText="Save"
+        okButtonProps={{ loading: updatingCategory, disabled: !editedCategoryName.trim() }}
+      >
+        <Input
+          aria-label="Category name"
+          value={editedCategoryName}
+          onChange={event => setEditedCategoryName(event.target.value)}
+          onPressEnter={handleUpdate}
+          placeholder="Enter category name"
+        />
+      </Modal>
+      <Toaster />
+    </div>
   )
 }
 
